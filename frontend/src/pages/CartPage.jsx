@@ -2,7 +2,7 @@ import { useCart } from "../context/CartContext";
 import { useState } from "react";
 
 export default function CartPage() {
-  const { cart, removeFromCart } = useCart();
+  const { cart } = useCart();
   const [customer, setCustomer] = useState({
     name: "",
     phone: "",

@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <header className="bg-white shadow-sm">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <h1 className="text-lg font-semibold">Israr Jewelry</h1>
+        <h1 className="text-lg font-semibold">Pearion Jewelry</h1>
         <nav className="flex gap-6 items-center">
           <Link to="/" className="hover:underline">
             Home

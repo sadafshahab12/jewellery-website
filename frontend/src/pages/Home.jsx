@@ -50,7 +50,7 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-lg font-semibold">
-                Israr Jewelry Wholesaler
+                Pearion Jewelry Wholesaler
               </h1>
               <p className="text-sm text-gray-500">
                 Since 1980 · Bolton Market, Karachi
@@ -228,9 +228,9 @@ export default function Home() {
       >
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <h3 className="text-2xl font-bold">About Israr Jewelry</h3>
+            <h3 className="text-2xl font-bold">About Pearion Jewelry</h3>
             <p className="mt-4 text-gray-700">
-              Since 1980, Israr Jewelry Wholesaler has been Karachi’s trusted
+              Since 1980, Pearion Jewelry Wholesaler has been Karachi’s trusted
               name in artificial jewelry. From timeless Indian craftsmanship to
               elegant imported designs, we bring jewelry that reflects grace,
               culture, and modern trends.
@@ -291,7 +291,7 @@ export default function Home() {
               <div>
                 🔗{" "}
                 <a
-                  href="https://www.facebook.com/israrjewelrykarachi"
+                  href="https://www.facebook.com/Pearionjewelrykarachi"
                   target="_blank"
                   rel="noreferrer"
                   className="text-amber-600"
@@ -300,7 +300,7 @@ export default function Home() {
                 </a>{" "}
                 ·{" "}
                 <a
-                  href="https://www.tiktok.com/@israr.jewelry.karachi"
+                  href="https://www.tiktok.com/@Pearion.jewelry.karachi"
                   target="_blank"
                   rel="noreferrer"
                   className="text-amber-600"
@@ -363,7 +363,7 @@ export default function Home() {
       <footer className="bg-gray-900 text-gray-200 mt-12">
         <div className="max-w-6xl mx-auto px-6 py-8 grid md:grid-cols-3 gap-6">
           <div>
-            <h5 className="font-semibold">Israr Jewelry Wholesaler</h5>
+            <h5 className="font-semibold">Pearion Jewelry Wholesaler</h5>
             <p className="text-sm text-gray-400 mt-2">
               Manufacturer · Importer · Wholesaler since 1980. Bolton Market,
               Karachi.
@@ -386,7 +386,7 @@ export default function Home() {
         </div>
 
         <div className="border-t border-gray-800 text-center py-4 text-sm text-gray-500">
-          © {new Date().getFullYear()} Israr Jewelry Wholesaler. All rights
+          © {new Date().getFullYear()} Pearion Jewelry Wholesaler. All rights
           reserved.
         </div>
       </footer>
