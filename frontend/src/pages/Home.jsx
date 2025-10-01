@@ -158,22 +158,22 @@ export default function Home() {
           <CategoryCard
             title="Locket Sets"
             subtitle="Everyday & Bridal"
-            img="https://images.unsplash.com/photo-1520975916000-6911213a9a22?w=900&q=80"
+            img="https://zeverat.pk/wp-content/uploads/2024/08/Flower-set.jpg"
           />
           <CategoryCard
             title="Earrings & Studs"
             subtitle="Furshi · AD · Jaipuri"
-            img="https://images.unsplash.com/photo-1520975916000-6911213a9a22?w=900&q=80"
+            img="https://zeverat.pk/wp-content/uploads/2024/08/Flower-set.jpg"
           />
           <CategoryCard
             title="Bangles & Bracelets"
             subtitle="Naurattan & Rajwari"
-            img="https://images.unsplash.com/photo-1549921296-3c6b6f6b3b0b?w=900&q=80"
+            img="https://zeverat.pk/wp-content/uploads/2024/08/Flower-set.jpg"
           />
           <CategoryCard
             title="Signature Pieces"
             subtitle="Polky · Egyptian"
-            img="https://images.unsplash.com/photo-1518544880936-33f2a3f3b4c2?w=900&q=80"
+            img="https://zeverat.pk/wp-content/uploads/2024/08/Flower-set.jpg"
           />
         </div>
       </section>

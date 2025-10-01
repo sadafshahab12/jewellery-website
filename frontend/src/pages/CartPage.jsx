@@ -7,65 +7,36 @@ export default function CartPage() {
     name: "",
     phone: "",
     address: "",
-    payment: "",
+    paymentMethod: "",
+    paymentProof: null,
+    easypaisaNumber: "",
+    jazzcashNumber: "",
   });
   const [showCheckout, setShowCheckout] = useState(false);
 
-  // total
   const total = cart.reduce(
     (acc, item) =>
       acc + (parseInt(item.price.replace(/\D/g, "")) || 0) * item.qty,
     0
   );
 
-  const handleCheckout = () => {
-    if (
-      !customer.name ||
-      !customer.phone ||
-      !customer.address ||
-      !customer.payment
-    ) {
-      alert("Please fill all fields & select payment method");
+  const handlePaymentProof = (e) => {
+    setCustomer({ ...customer, paymentProof: e.target.files[0] });
+  };
+
+  const handleCheckout = async () => {
+    if (customer.paymentMethod === "COD") {
+      alert("Order placed successfully with Cash on Delivery!");
       return;
     }
 
-    const orderDetails = cart
-      .map(
-        (item) =>
-          `${item.title} (x${item.qty}) - Rs ${
-            (parseInt(item.price.replace(/\D/g, "")) || 0) * item.qty
-          }`
-      )
-      .join("\n");
-
-    if (customer.payment === "Cash on Delivery") {
-      const message = `*New COD Order*\n\nName: ${customer.name}\nPhone: ${customer.phone}\nAddress: ${customer.address}\n\n${orderDetails}\n\nTotal: Rs ${total}`;
-      window.open(
-        `https://wa.me/923218382527?text=${encodeURIComponent(message)}`,
-        "_blank"
-      );
-    }
-
-    if (customer.payment === "Online Payment") {
-      // ✅ Redirect to backend payment API
-      fetch("http://localhost:5000/api/pay", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: total, customer }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // Redirect to JazzCash/Easypaisa page
-          window.location.href = data.redirectUrl;
-        })
-        .catch((err) => console.error("Payment error:", err));
-    }
+    console.log("Submitting payment info:", customer);
+    alert("Payment info submitted. Backend integration pending.");
   };
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       <h2 className="text-3xl font-bold mb-6">Your Cart</h2>
-
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -94,7 +65,6 @@ export default function CartPage() {
             <p className="text-xl font-bold">Rs {total}</p>
           </div>
 
-          {/* Proceed button */}
           {!showCheckout && (
             <button
               onClick={() => setShowCheckout(true)}
@@ -104,10 +74,10 @@ export default function CartPage() {
             </button>
           )}
 
-          {/* Checkout form */}
           {showCheckout && (
             <div className="mt-8 border-t pt-6">
               <h3 className="text-lg font-semibold mb-4">Checkout</h3>
+
               <input
                 type="text"
                 placeholder="Full Name"
@@ -135,45 +105,94 @@ export default function CartPage() {
                 }
               />
 
-              {/* Order summary in form */}
-              <div className="mb-4 bg-gray-50 p-3 rounded">
-                <h4 className="font-semibold mb-2">Order Summary</h4>
-                {cart.map((item) => (
-                  <p key={item.id}>
-                    {item.title} (x{item.qty}) = Rs{" "}
-                    {(parseInt(item.price.replace(/\D/g, "")) || 0) * item.qty}
-                  </p>
+              {/* Payment method selection */}
+              <div className="mb-4">
+                {["COD", "Easypaisa", "JazzCash"].map((method) => (
+                  <label key={method} className="flex items-center gap-2 mb-2">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value={method}
+                      checked={customer.paymentMethod === method}
+                      onChange={(e) =>
+                        setCustomer({
+                          ...customer,
+                          paymentMethod: e.target.value,
+                        })
+                      }
+                    />
+                    {method === "COD"
+                      ? "Cash on Delivery"
+                      : `Pay with ${method}`}
+                  </label>
                 ))}
-                <p className="mt-2 font-bold">Grand Total: Rs {total}</p>
               </div>
 
-              {/* payment options */}
-              <div className="mb-4">
-                <label className="flex items-center gap-2 mb-2">
+              {/* Conditional fields for payment */}
+              {(customer.paymentMethod === "Easypaisa" ||
+                customer.paymentMethod === "JazzCash") && (
+                <div
+                  className={`mb-4 p-3 border rounded ${
+                    customer.paymentMethod === "Easypaisa"
+                      ? "bg-yellow-50"
+                      : "bg-green-50"
+                  }`}
+                >
+                  <p>
+                    Enter your{" "}
+                    {customer.paymentMethod === "Easypaisa"
+                      ? "Easypaisa"
+                      : "JazzCash"}{" "}
+                    mobile number:
+                  </p>
                   <input
-                    type="radio"
-                    name="payment"
-                    value="Cash on Delivery"
-                    checked={customer.payment === "Cash on Delivery"}
+                    type="text"
+                    placeholder={`${customer.paymentMethod} Number`}
+                    className="w-full border px-3 py-2 rounded mt-2 mb-3"
+                    value={
+                      customer.paymentMethod === "Easypaisa"
+                        ? customer.easypaisaNumber
+                        : customer.jazzcashNumber
+                    }
                     onChange={(e) =>
-                      setCustomer({ ...customer, payment: e.target.value })
+                      setCustomer({
+                        ...customer,
+                        [customer.paymentMethod === "Easypaisa"
+                          ? "easypaisaNumber"
+                          : "jazzcashNumber"]: e.target.value,
+                      })
                     }
                   />
-                  Cash on Delivery
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="Online Payment"
-                    checked={customer.payment === "Online Payment"}
-                    onChange={(e) =>
-                      setCustomer({ ...customer, payment: e.target.value })
-                    }
-                  />
-                  Online Payment
-                </label>
-              </div>
+
+                  <p className="mb-2">Upload screenshot of payment:</p>
+
+                  {/* Custom File Input */}
+                  <label className="flex items-center gap-2 bg-white border rounded px-3 py-2 cursor-pointer hover:bg-gray-100">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-gray-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12v6m0 0l-3-3m3 3l3-3m-6-6h.01M18 6h.01M6 6h.01"
+                      />
+                    </svg>
+                    {customer.paymentProof
+                      ? customer.paymentProof.name
+                      : "Choose file"}
+                    <input
+                      type="file"
+                      onChange={handlePaymentProof}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              )}
 
               <button
                 onClick={handleCheckout}
